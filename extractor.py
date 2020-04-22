@@ -16,7 +16,3 @@ class extractor:
             json.dump(jsonData, jsonFile)
 
         debug.debug_print("SUCCESS: data extracted (socialDistancingData on stateFIPS:%02d)" % (stateFIPS), 2)
-
-if __name__ == "__main__":
-    extractor = extractor()
-    extractor.get_socialDistancingData(2, 'sd-state%02d.json' % (2))

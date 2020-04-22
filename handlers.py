@@ -19,47 +19,23 @@ class handler_csv:
         else:
             return firstAttribute == secondAttribute
 
-    # Simple function for testing encoding of file, no need at all
-    def print_singleColumnCsvFile(self, csvFilename, columnName):
+    def _loadData(self, csvFilename):
         csvData = []
+        csvFileFieldnames = []
         with open(csvFilename) as csvFile:
             csvDriver = csv.DictReader(csvFile)
+            csvFileFieldnames = csvDriver.fieldnames
             for row in csvDriver:
                 csvData.append(row)
-
-        debug.debug_print("CSV File Data: %s" % (csvFilename), 3)
-        print(columnName)
-        for row in csvData:
-            print(row[columnName])
+        return (csvData, csvFileFieldnames)
 
     # Function that merge two CSV files on 'commonColumn'
-    def merge_csvFiles_byColumn(self, csvFilename1, csvFilename2, destinationFilename, commonColumnNameOnFile1, commonColumnNameOnFile2, commonColumnDataType='string'):
-        # Get first csvFile data
-        csvData1 = []
-        csvFile1Fieldnames = []
-        with open(csvFilename1) as csvFile:
-            csvDriver = csv.DictReader(csvFile)
-            csvFile1Fieldnames = csvDriver.fieldnames
-            for row in csvDriver:
-                csvData1.append(row)
-
-        # Get secondary csvFile data
-        csvData2 = []
-        csvFile2Fieldnames = []
-        with open(csvFilename2) as csvFile:
-            csvDriver = csv.DictReader(csvFile)
-            csvFile2Fieldnames = csvDriver.fieldnames
-            for row in csvDriver:
-                csvData2.append(row)
-        '''
-        debug.debug_print("File1 Fieldnames", 2)
-        print(csvFile1Fieldnames)
-        debug.debug_seprate()
-        debug.debug_print("File 2Fieldnames", 2)
-        print(csvFile2Fieldnames)
-        debug.debug_seprate()
-        '''
-        # Generate fina fieldnames after merge and remove duplication of 'commonColumn'
+    def merge_csvFiles_addColumns(self, csvFilename1, csvFilename2, destinationFilename, commonColumnNameOnFile1, commonColumnNameOnFile2, commonColumnDataType='string'):
+        # Get csvFiles data
+        csvData1, csvFile1Fieldnames = self._loadData(csvFilename1)
+        csvData2, csvFile2Fieldnames = self._loadData(csvFilename2)
+        
+        # Generate final fieldnames after merge and remove duplication of 'commonColumn'
         mergedDataFieldnames = csvFile1Fieldnames + csvFile2Fieldnames
         mergedDataFieldnames.remove(commonColumnNameOnFile2)
 
@@ -90,24 +66,10 @@ class handler_csv:
         debug.debug_print("SUCCESS: merge completed", 2)
 
     # Function that merge rows of two CSV files
-    def merge_csvFiles_byRow(self, csvFilename1, csvFilename2, destinationFilename):
-        # Get first csvFile data
-        csvData1 = []
-        csvFile1Fieldnames = []
-        with open(csvFilename1) as csvFile:
-            csvDriver = csv.DictReader(csvFile)
-            csvFile1Fieldnames = csvDriver.fieldnames
-            for row in csvDriver:
-                csvData1.append(row)
-
-        # Get secondary csvFile data
-        csvData2 = []
-        csvFile2Fieldnames = []
-        with open(csvFilename2) as csvFile:
-            csvDriver = csv.DictReader(csvFile)
-            csvFile2Fieldnames = csvDriver.fieldnames
-            for row in csvDriver:
-                csvData2.append(row)
+    def merge_csvFiles_addRows(self, csvFilename1, csvFilename2, destinationFilename):
+        # Get csvFiles data
+        csvData1, csvFile1Fieldnames = self._loadData(csvFilename1)
+        csvData2, csvFile2Fieldnames = self._loadData(csvFilename2)
 
         if csvFile1Fieldnames != csvFile2Fieldnames:
             debug.debug_print("ERROR: mismatch in columns", 2)
@@ -143,27 +105,21 @@ class handler_json:
     def __init__(self):
         debug.debug_print("JSON Handler is up", 1)
 
-    # Function that transform a JSON file to CSV file. Only the fields that mentioned in 'fieldnames'
-    def transform_jsonToCsv(self, jsonFilename, csvFilename, fieldnames):
-        jsonData = []
+    def _loadData(self, jsonFilename):
+        jsonMetaData = []
         with open(jsonFilename) as jsonFile:
-            jsonData = json.load(jsonFile)[1:]
-        with open(csvFilename, 'w') as csvFile:
-            csvDriver = csv.DictWriter(csvFile, fieldnames=fieldnames)
-            csvDriver.writeheader()
+            jsonMetaData = json.load(jsonFile)
+        return jsonMetaData
 
-            for row in jsonData:
-                csvDriver.writerow({k:unicode(row[k]).encode('utf-8') for k in (fieldnames) if k in row})
-
-        debug.debug_print("SUCCESS: transform completed", 2)
-
+    # Function that transform a JSON file to CSV file. Design for hospitalBedMetaData
     def transform_jsonToCsv_hospitalBedData(self, jsonFilename, csvFilename):
         jsonMetaData = []
         fieldnames = ['county_fips', 'countyName', 'stateName', 'beds', 'unoccupiedBeds']
-        with open(jsonFilename) as jsonFile:
-            jsonMetaData = json.load(jsonFile)
+        jsonMetaData = self._loadData(jsonFilename)
 
         jsonCountiesData = jsonMetaData['objects']['counties']['geometries']
+        singleCountyData = {}
+
         with open(csvFilename, 'w') as csvFile:
             csvDriver = csv.DictWriter(csvFile, fieldnames=fieldnames)
             csvDriver.writeheader()
@@ -174,12 +130,12 @@ class handler_json:
         
         debug.debug_print("SUCCESS: transform completed(hospitalBedData)", 2)
 
+    # Function that transform a JSON file to CSV file. Design for socialDistancingBedMetaData
     def transform_jsonToCsv_socialDistancingData(self, jsonFilename, csvFilename):
         jsonMetaData = []
         countyFieldnames = ['stateFips', 'stateName', 'countyFips', 'countyName']
         dataFieldnames = ['date', 'totalGrade', 'visitationGrade', 'encountersGrade', 'travelDistanceGrade']
-        with open(jsonFilename) as jsonFile:
-            jsonMetaData = json.load(jsonFile)
+        jsonMetaData = self._loadData(jsonFilename)
 
         jsonCountiesData = jsonMetaData['hits']['hits']
         singleCountyData = {}
@@ -196,18 +152,3 @@ class handler_json:
                     csvDriver.writerow(singleCountyData)
         
         debug.debug_print("SUCCESS: transform completed(socialDistancingData)", 2)
-
-if __name__ == "__main__":
-    jsonHandler = handler_json()
-    csvHandler = handler_csv()
-    
-    # jsonHandler.transform_jsonToCsv('confirmanddeath.json', 'temp.csv', ['popul', 'county'])
-    # csvHandler.merge e_csvFiles_byColumn('temp.csv', 'simpleCountyData.csv', 'merged.csv', 'county', 'CTYNAME')
-    # csvHandler.simplify_csvFile('csvFiles/latitude.csv', 'csvFiles/simple-lat.csv', ['county_fips', 'lat'])
-    # csvHandler.merge_csvFiles_byColumn('csvFiles/data.csv', 'csvFiles/simple-lat.csv', 'csvFiles/fixed-data.csv', 'county FIPS code', 'county_fips')
-    # csvHandler.print_singleColumnCsvFile('csvFiles/simple-lat.csv', 'county_fips')
-    # jsonHandler.transform_jsonToCsv_hospitalBedData('hospital-beds.json', 'csvFiles/hospital-beds.csv')
-    # csvHandler.simplify_csvFile('csvFiles/hospital-beds.csv', 'csvFiles/simple-hospital-beds.csv', ['county_fips', 'beds(per1000)', 'unoccupiedBeds(per1000)'])
-    # csvHandler.merge_csvFiles_byColumn('csvFiles/dataAndLat.csv', 'csvFiles/simple-hospital-beds.csv', 'csvFiles/fixed-data.csv', 'county FIPS code', 'county_fips')
-    jsonHandler.transform_jsonToCsv_socialDistancingData('sd-state02.json', 'csvFiles/socialDistancing-s02.csv')
-    # csvHandler.merge_csvFiles_byRow('csvFiles/socialDistancing-s01.csv', 'csvFiles/socialDistancing-s11.csv', 'csvFiles/socialDistancing.csv')
