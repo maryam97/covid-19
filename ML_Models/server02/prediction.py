@@ -21,7 +21,7 @@ import shelve
 
 
 r = 14  # the following day to predict
-numberOfSelectedCounties = 30
+numberOfSelectedCounties = 8
 
 
 ######################################################### split data to train, val, test
@@ -274,7 +274,7 @@ def push(message):
         cmd.run("git add .", check=True, shell=True)
         #message = 'new results added'
         cmd.run(f"git commit -m '{message}'", check=True, shell=True)
-        cmd.run("git push -u origin master -f", check=True, shell=True)
+        cmd.run("git push -a", check=True, shell=True)
         print('pushed.')
     except:
         print('could not push')
