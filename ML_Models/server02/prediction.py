@@ -510,7 +510,7 @@ def main(maxHistory):
 if __name__ == "__main__":
 
     begin = time.time()
-    maxHistory = 3
+    maxHistory = 14
     # make directories for saving the results
     validation_address = str(argv[1]) + '/results/counties=' + str(numberOfSelectedCounties) + ' max_history=' + str(maxHistory) + '/validation/'
     test_address = str(argv[1]) + '/results/counties=' + str(numberOfSelectedCounties) + ' max_history=' + str(maxHistory) + '/test/'
