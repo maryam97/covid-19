@@ -260,7 +260,7 @@ def get_errors(h, c, method, y_prediction, y_test):
     r_squared = 1 - (float(SS_Residual)) / SS_Total
     adj_r_squared = 1 - (1 - r_squared) * (len(y_test) - 1) / (len(y_test) - c - 1)
     print("Adjusted R Squared Error of ", method, " for h =", h, "and #covariates =", c, ": %.4f" % adj_r_squared)
-
+    print("-----------------------------------------------------------------------------------------")
     sys.stdout = orig_stdout
     f.close()
     return meanAbsoluteError, rootMeanSquaredError, percentageOfAbsoluteError, adj_r_squared
