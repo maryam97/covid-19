@@ -547,5 +547,5 @@ if __name__ == "__main__":
     env_address = str(argv[1]) + '/results/counties=' + str(numberOfSelectedCounties) + ' max_history=' + str(maxHistory) + '/'
     main(maxHistory)
     end = time.time()
-
+    push('final results added')
     print("The total time of execution: ", end - begin)
