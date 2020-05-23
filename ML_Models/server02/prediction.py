@@ -327,6 +327,7 @@ def main(maxHistory):
         indx_c = 0
         for c in covariates_names:  # iterate through sorted covariates
             indx_c += 1
+            print('h=', h, ' c=', indx_c)
             for covariate in data.columns:  # add all historical covariates of this covariate and create a feature
                 if c.split(' ')[0] in covariate:
                     covariates_list.append(covariate)
