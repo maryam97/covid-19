@@ -347,7 +347,11 @@ def main(maxHistory):
         # dill.dump_session(filename)
         my_shelf = shelve.open(filename, 'n')  # 'n' for new
         for key in dir():
-            my_shelf[key] = locals()[key]
+            try:
+                my_shelf[key] = locals()[key]
+            except:
+                print('ERROR shelving: {0}'.format(key))
+        my_shelf.close()
         # initiate loom for parallel processing
         loom = ProcessLoom(max_runner_cap=len(base_data.columns) * len(mixed_methods) + 5)
         for c in range(1, numberOfCovariates + 1):
@@ -375,7 +379,11 @@ def main(maxHistory):
         #dill.dump_session(filename)
         my_shelf = shelve.open(filename, 'n')  # 'n' for new
         for key in dir():
-            my_shelf[key] = locals()[key]
+            try:
+                my_shelf[key] = locals()[key]
+            except:
+                print('ERROR shelving: {0}'.format(key))
+        my_shelf.close()
 
         indx_c = 0
         for c in covariates_names:  # iterate through sorted covariates
@@ -413,13 +421,21 @@ def main(maxHistory):
             # dill.dump_session(filename)
             my_shelf = shelve.open(filename, 'n')  # 'n' for new
             for key in dir():
-                my_shelf[key] = locals()[key]
+                try:
+                    my_shelf[key] = locals()[key]
+                except:
+                    print('ERROR shelving: {0}'.format(key))
+            my_shelf.close()
         # save the entire session for each h
         filename = env_address + 'validation.out'
         # dill.dump_session(filename)
         my_shelf = shelve.open(filename, 'n')  # 'n' for new
         for key in dir():
-            my_shelf[key] = locals()[key]
+            try:
+                my_shelf[key] = locals()[key]
+            except:
+                print('ERROR shelving: {0}'.format(key))
+        my_shelf.close()
 
         # push the file of outputs
         push('logs of h=' + str(h) + ' added')
@@ -485,7 +501,11 @@ def main(maxHistory):
     # dill.dump_session(filename)
     my_shelf = shelve.open(filename, 'n')  # 'n' for new
     for key in dir():
-        my_shelf[key] = locals()[key]
+        try:
+            my_shelf[key] = locals()[key]
+        except:
+            print('ERROR shelving: {0}'.format(key))
+    my_shelf.close()
     # mixed model with linear regression and neural network
     y_prediction['MM_LR'], y_prediction['MM_NN'] = run_mixed_models(X_train_MM_dict, X_test_MM_dict, y_train_MM_dict, y_test_MM_dict)
     for mixed_method in mixed_methods:
@@ -502,7 +522,11 @@ def main(maxHistory):
     # dill.dump_session(filename)
     my_shelf = shelve.open(filename, 'n')  # 'n' for new
     for key in dir():
-        my_shelf[key] = locals()[key]
+        try:
+            my_shelf[key] = locals()[key]
+        except:
+            print('ERROR shelving: {0}'.format(key))
+    my_shelf.close()
     table_name = 'mixed methods best results'
     plot_table(table_data, columns_table, table_name)
     push('a new table added')
@@ -511,7 +535,7 @@ def main(maxHistory):
 if __name__ == "__main__":
 
     begin = time.time()
-    maxHistory = 2
+    maxHistory = 1
     # make directories for saving the results
     validation_address = str(argv[1]) + '/results/counties=' + str(numberOfSelectedCounties) + ' max_history=' + str(maxHistory) + '/validation/'
     test_address = str(argv[1]) + '/results/counties=' + str(numberOfSelectedCounties) + ' max_history=' + str(maxHistory) + '/test/'
