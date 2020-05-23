@@ -274,7 +274,7 @@ def push(message):
         cmd.run("git add .", check=True, shell=True)
         #message = 'new results added'
         cmd.run(f"git commit -m '{message}'", check=True, shell=True)
-        cmd.run("git push -- all", check=True, shell=True)
+        cmd.run("git push", check=True, shell=True)
         print('pushed.')
     except:
         print('could not push')
