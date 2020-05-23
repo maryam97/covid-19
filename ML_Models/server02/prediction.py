@@ -21,7 +21,7 @@ import shelve
 
 
 r = 14  # the following day to predict
-numberOfSelectedCounties = 10
+numberOfSelectedCounties = 29
 
 
 ######################################################### split data to train, val, test
