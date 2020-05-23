@@ -21,7 +21,7 @@ import shelve
 
 
 r = 14  # the following day to predict
-numberOfSelectedCounties = 29
+numberOfSelectedCounties = 3
 
 
 ######################################################### split data to train, val, test
@@ -543,6 +543,7 @@ if __name__ == "__main__":
         os.makedirs(test_address)
     if not os.path.exists(validation_address):
         os.makedirs(validation_address)
+    push('new folders added')
     env_address = str(argv[1]) + '/results/counties=' + str(numberOfSelectedCounties) + ' max_history=' + str(maxHistory) + '/'
     main(maxHistory)
     end = time.time()
