@@ -21,7 +21,7 @@ import shelve
 
 
 r = 14  # the following day to predict
-numberOfSelectedCounties = 9
+numberOfSelectedCounties = 29
 
 
 ######################################################### split data to train, val, test
@@ -404,8 +404,8 @@ def main(maxHistory):
                     y_val = y_test_MM[method][(h, indx_c)]
                 mae_errors[method][(h, indx_c)], rmse_errors[method][(h, indx_c)], percentage_errors[method][(h, indx_c)], \
                 adjR2_errors[method][(h, indx_c)] = get_errors(h, indx_c, method, y_prediction[method][(h, indx_c)], y_val)
-                if rmse_errors[method][(h, indx_c)] < minError[method]:
-                    minError[method] = rmse_errors[method][(h, indx_c)]
+                if percentage_errors[method][(h, indx_c)] < minError[method]:
+                    minError[method] = percentage_errors[method][(h, indx_c)]
                     best_h[method] = h
                     best_c[method] = indx_c
                     if method != 'MM_LR' and method != 'MM_NN':
@@ -535,7 +535,7 @@ def main(maxHistory):
 if __name__ == "__main__":
 
     begin = time.time()
-    maxHistory = 1
+    maxHistory = 2
     # make directories for saving the results
     validation_address = str(argv[1]) + '/results/counties=' + str(numberOfSelectedCounties) + ' max_history=' + str(maxHistory) + '/validation/'
     test_address = str(argv[1]) + '/results/counties=' + str(numberOfSelectedCounties) + ' max_history=' + str(maxHistory) + '/test/'
