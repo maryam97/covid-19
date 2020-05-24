@@ -21,7 +21,7 @@ import shelve
 
 
 r = 14  # the following day to predict
-numberOfSelectedCounties = 2
+numberOfSelectedCounties = 12
 
 
 ######################################################### split data to train, val, test
@@ -242,7 +242,7 @@ def plot_table(table_data, col_labels, row_labels, name):
     the_table.set_fontsize(12)
     the_table.scale(1.5, 1.5)
     ax.axis('off')
-    plt.savefig(test_address + name + '.png')
+    plt.savefig(test_address + name + '.png', bbox_inches='tight')
 
 ########################################################### get errors for each model
 def get_errors(h, c, method, y_prediction, y_test):
