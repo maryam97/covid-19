@@ -231,11 +231,11 @@ def plot_results(row, col, numberOfCovariates, methods, history, errors, mode):
 
 ########################################################### plot table for final results
 def plot_table(table_data, cols, name):
-    fig = plt.figure(dpi=100)
+    fig = plt.figure(dpi=80)
     ax = fig.add_subplot(1, 1, 1)
     table = ax.table(cellText=table_data, colLabels=cols, loc='center')
-    table.set_fontsize(14)
-    table.scale(1, 3)
+    table.set_fontsize(24)
+    table.scale(1, 2)
     ax.axis('off')
     plt.savefig(test_address + name + '.png')
 
