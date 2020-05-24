@@ -2158,3 +2158,23 @@ Percentage of Absolute Error of  MM_NN  for h = 2 and #covariates = 36 : 91.2190
 Root Mean Squared Error of  MM_NN  for h = 2 and #covariates = 36 : 2.7542
 Adjusted R Squared Error of  MM_NN  for h = 2 and #covariates = 36 : -2.8630
 -----------------------------------------------------------------------------------------
+Mean Absolute Error of  GBM  for h = 1 and #covariates = 1 : 2.9371
+Percentage of Absolute Error of  GBM  for h = 1 and #covariates = 1 : 120.5866
+Root Mean Squared Error of  GBM  for h = 1 and #covariates = 1 : 5.1685
+Adjusted R Squared Error of  GBM  for h = 1 and #covariates = 1 : -0.7261
+-----------------------------------------------------------------------------------------
+Mean Absolute Error of  GLM  for h = 1 and #covariates = 2 : 2.2072
+Percentage of Absolute Error of  GLM  for h = 1 and #covariates = 2 : 90.6173
+Root Mean Squared Error of  GLM  for h = 1 and #covariates = 2 : 4.2405
+Adjusted R Squared Error of  GLM  for h = 1 and #covariates = 2 : -0.1704
+-----------------------------------------------------------------------------------------
+Mean Absolute Error of  KNN  for h = 2 and #covariates = 1 : 2.2376
+Percentage of Absolute Error of  KNN  for h = 2 and #covariates = 1 : 91.8658
+Root Mean Squared Error of  KNN  for h = 2 and #covariates = 1 : 4.3268
+Adjusted R Squared Error of  KNN  for h = 2 and #covariates = 1 : -0.2096
+-----------------------------------------------------------------------------------------
+Mean Absolute Error of  NN  for h = 2 and #covariates = 1 : 2.9311
+Percentage of Absolute Error of  NN  for h = 2 and #covariates = 1 : 120.3400
+Root Mean Squared Error of  NN  for h = 2 and #covariates = 1 : 4.7935
+Adjusted R Squared Error of  NN  for h = 2 and #covariates = 1 : -0.4847
+-----------------------------------------------------------------------------------------
