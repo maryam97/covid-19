@@ -5538,3 +5538,13 @@ Percentage of Absolute Error of  NN  for h = 1 and #covariates = 29 : 59.4443
 Root Mean Squared Error of  NN  for h = 1 and #covariates = 29 : 1.9769
 Adjusted R Squared Error of  NN  for h = 1 and #covariates = 29 : 8.9481
 -----------------------------------------------------------------------------------------
+Mean Absolute Error of  MM_LR  for h = 1 and #covariates = 19 : 1.5009
+Percentage of Absolute Error of  MM_LR  for h = 1 and #covariates = 19 : 58.3684
+Root Mean Squared Error of  MM_LR  for h = 1 and #covariates = 19 : 1.7559
+Adjusted R Squared Error of  MM_LR  for h = 1 and #covariates = 19 : 1.3352
+-----------------------------------------------------------------------------------------
+Mean Absolute Error of  MM_NN  for h = 1 and #covariates = 4 : 1.9288
+Percentage of Absolute Error of  MM_NN  for h = 1 and #covariates = 4 : 96.4422
+Root Mean Squared Error of  MM_NN  for h = 1 and #covariates = 4 : 2.1801
+Adjusted R Squared Error of  MM_NN  for h = 1 and #covariates = 4 : -2.3269
+-----------------------------------------------------------------------------------------
