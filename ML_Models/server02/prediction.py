@@ -234,7 +234,7 @@ def plot_table(table_data, cols, name):
     fig = plt.figure() #dpi=50
     ax = fig.add_subplot(1, 1, 1)
     table = ax.table(cellText=table_data, colLabels=cols, loc='center',
-                     cellLoc='center', rowLoc='center', colWidths=[0.1] * len(cols))
+                     cellLoc='center', rowLoc='center', colWidths=[0.2, 0.1, 0.1, 0.5, 0.5, 0.5, 0.5] )
     table.auto_set_font_size(False)
     table.set_fontsize(24)
     table.scale(2, 2)
