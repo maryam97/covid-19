@@ -70,5 +70,7 @@ dependencies:
   - pip:
     - dill==0.3.1.1
     - parallel-execute==0.1.0
-prefix: /home/maryam/anaconda3/envs/covidenv
+
+
+
 
