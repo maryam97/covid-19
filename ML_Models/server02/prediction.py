@@ -231,10 +231,10 @@ def plot_results(row, col, numberOfCovariates, methods, history, errors, mode):
 
 ########################################################### plot table for final results
 def plot_table(table_data, cols, name):
-    fig = plt.figure(dpi=100) #dpi=50
+    fig = plt.figure(dpi=500) #dpi=50
     ax = fig.add_subplot(1, 1, 1)
     table = ax.table(cellText=table_data, colLabels=cols, loc='center',
-                     cellLoc='center', rowLoc='center', colWidths=[0.2, 0.1, 0.1, 0.3, 0.3, 0.3, 0.3] )
+                     cellLoc='center', rowLoc='center', colWidths=[0.2, 0.1, 0.1, 0.3, 0.3, 0.4, 0.3] )
     table.auto_set_font_size(False)
     table.set_fontsize(24)
     table.scale(2, 2)
