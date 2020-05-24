@@ -240,7 +240,6 @@ def plot_table(table_data, cols, name):
     ax.axis('off')
     plt.savefig(test_address + name + '.png')
 
-
 ########################################################### get errors for each model
 def get_errors(h, c, method, y_prediction, y_test):
     # write outputs into a file
