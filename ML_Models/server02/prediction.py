@@ -21,7 +21,7 @@ import shelve
 
 
 r = 14  # the following day to predict
-numberOfSelectedCounties = 12
+numberOfSelectedCounties = 2
 
 
 ######################################################### split data to train, val, test
@@ -234,10 +234,11 @@ def plot_table(table_data, col_labels, row_labels, name):
     fig = plt.figure() #dpi=50 figsize=(30, 10)
     ax = fig.add_subplot(111)
     the_table = plt.table(cellText=table_data,
-                          colWidths=[0.1, 0.1, 0.35, 0.35, 0.4, 0.35],
+                          colWidths=[0.1, 0.1, 0.3, 0.3, 0.3, 0.3],
                           rowLabels=row_labels,
                           colLabels=col_labels,
-                          loc='center')
+                          loc='center',
+                          cellLoc='center')
     the_table.auto_set_font_size(False)
     the_table.set_fontsize(12)
     the_table.scale(1.5, 1.5)
