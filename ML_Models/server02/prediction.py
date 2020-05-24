@@ -230,13 +230,17 @@ def plot_results(row, col, numberOfCovariates, methods, history, errors, mode):
 
 
 ########################################################### plot table for final results
-def plot_table(table_data, cols, name):
+def plot_table(table_data, col_labels, row_labels, name):
     fig = plt.figure() #dpi=50 figsize=(30, 10)
     ax = fig.add_subplot(111)
-    table = ax.table(cellText=table_data, colLabels=cols, loc='center', colWidths=[0.2, 0.1, 0.1, 0.3, 0.3, 0.4, 0.3])
-    table.auto_set_font_size(False)
-    table.set_fontsize(24)
-    table.scale(2, 2)
+    the_table = plt.table(cellText=table_data,
+                          colWidths=[0.1, 0.1, 0.35, 0.35, 0.4, 0.35],
+                          rowLabels=row_labels,
+                          colLabels=col_labels,
+                          loc='center')
+    the_table.auto_set_font_size(False)
+    the_table.set_fontsize(12)
+    the_table.scale(1.5, 1.5)
     ax.axis('off')
     plt.savefig(test_address + name + '.png')
 
@@ -446,7 +450,7 @@ def main(maxHistory):
     plot_results(3, 2, numberOfCovariates, methods, history, adjR2_errors, 'Adjusted R Squared Error')
     push('plots added')
     #################################################################################################################
-    columns_table = ['method', 'best_h', 'best_c', 'root mean squared error', 'mean absolute error',
+    columns_table = ['best_h', 'best_c', 'root mean squared error', 'mean absolute error',
                      'percentage of absolute error', 'adjusted R squared error']  # table columns names
     y_prediction = {}
     # run non-mixed methods on the whole training set with their best h and c
@@ -460,14 +464,14 @@ def main(maxHistory):
     for method in none_mixed_methods:
         meanAbsoluteError, rootMeanSquaredError, percentageOfAbsoluteError, adj_r_squared = get_errors(best_h[method],
         best_c[method], method, y_prediction[method], historical_y_test[method])
-        table_data.append([method, best_h[method], best_c[method], round(rootMeanSquaredError, 2), round(meanAbsoluteError, 2),
+        table_data.append([best_h[method], best_c[method], round(rootMeanSquaredError, 2), round(meanAbsoluteError, 2),
              round(percentageOfAbsoluteError, 2), round(adj_r_squared, 2)])
         result = pd.DataFrame(historical_y_test[method], columns=['y_test'])
         result['y_prediction'] = y_prediction[method]
         result['absolute_error'] = abs(historical_y_test[method] - y_prediction[method])
         result.to_csv(test_address + method + '.csv')
     table_name = 'non-mixed methods best results'
-    plot_table(table_data, columns_table, table_name)
+    plot_table(table_data, columns_table, none_mixed_methods, table_name)
     push('a new table added')
     # generate data for non-mixed methods with the best h and c of mixed models and fit mixed models on them
     # (with the whole training set)
@@ -511,7 +515,7 @@ def main(maxHistory):
     for mixed_method in mixed_methods:
         meanAbsoluteError, rootMeanSquaredError, percentageOfAbsoluteError, adj_r_squared = get_errors(best_h[mixed_method],
         best_c[mixed_method], mixed_method, y_prediction[mixed_method], y_test_MM_dict[mixed_method])
-        table_data.append([mixed_method, best_h[mixed_method], best_c[mixed_method], round(rootMeanSquaredError, 2),
+        table_data.append([best_h[mixed_method], best_c[mixed_method], round(rootMeanSquaredError, 2),
              round(meanAbsoluteError, 2), round(percentageOfAbsoluteError, 2), round(adj_r_squared, 2)])
         result = pd.DataFrame(y_test_MM_dict[mixed_method], columns=['y_test'])
         result['y_prediction'] = y_prediction[mixed_method]
@@ -528,7 +532,7 @@ def main(maxHistory):
             print('ERROR shelving: {0}'.format(key))
     my_shelf.close()
     table_name = 'mixed methods best results'
-    plot_table(table_data, columns_table, table_name)
+    plot_table(table_data, columns_table, mixed_methods, table_name)
     push('a new table added')
 
 
